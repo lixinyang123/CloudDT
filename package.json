@@ -1,0 +1,27 @@
+{
+  "name": "codemaker",
+  "version": "1.0.0",
+  "description": "Easy to use code editor with cloud development environment.",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "electron ./src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lixinyang123/CodeMaker.git"
+  },
+  "keywords": [
+    "editor",
+    "devenv",
+    "electron"
+  ],
+  "author": "lllxy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lixinyang123/CodeMaker/issues"
+  },
+  "homepage": "https://github.com/lixinyang123/CodeMaker#readme",
+  "devDependencies": {
+    "electron": "^15.3.1"
+  }
+}
