@@ -1,6 +1,6 @@
 using BlazorFluentUI;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using CodeMaker.Web;
+using CodeMaker.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
 using System;

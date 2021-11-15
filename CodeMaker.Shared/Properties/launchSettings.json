@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "CodeMaker.Web": {
+    "CodeMaker.Shared": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
