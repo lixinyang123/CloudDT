@@ -1,0 +1,18 @@
+﻿@using BlazorFluentUI.Themes.Default
+@inherits LayoutComponentBase
+
+@inject ThemeProvider ThemeProvider;
+
+<div class="page">
+    <main>
+        @Body
+    </main>
+</div>
+
+@code {
+    protected override Task OnInitializedAsync()
+    {
+        ThemeProvider?.UpdateTheme(new DefaultPaletteDark());
+        return base.OnInitializedAsync();
+    }
+}

@@ -104,3 +104,7 @@ dist
 .tern-port
 
 package-lock.json
+bin
+obj
+.vs
+.vscode

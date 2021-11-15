@@ -1,0 +1,1 @@
+dotnet build ./CodeMaker.Web/CodeMaker.Web.csproj

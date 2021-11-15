@@ -1,0 +1,11 @@
+@inject IJSRuntime JSRuntime
+
+<div id="editor" style="height: 100%; width: 100%; overflow: hidden; border-radius: 10px;"></div>
+
+@code {
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        JSRuntime.InvokeVoidAsync("initEditor");
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}

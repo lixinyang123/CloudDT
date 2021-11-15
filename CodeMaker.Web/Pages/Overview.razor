@@ -1,0 +1,69 @@
+﻿@page "/Overview"
+@using BlazorFluentUI.Themes.Default
+
+<style>
+    article {
+        height: calc(100vh - 45px);
+        width: 100%;
+    }
+</style>
+
+<Pivot AriaLabel="CodeMaker" @bind-SelectedKey=SelectedKey>
+
+    <PivotItem HeaderText="Borad" ItemKey="Borad" />
+
+    <PivotItem HeaderText="Editor" ItemKey="Editor" />
+    
+    <PivotItem HeaderText="Console" ItemKey="Console" />
+
+    <PivotItem HeaderText="CloudShell" ItemKey="CloudShell" />
+
+    <PivotItem HeaderText="Others" ItemKey="Others" />
+
+</Pivot>
+
+@code {
+    private string? SelectedKey { get; set; }
+
+    protected override void OnInitialized()
+    {
+        SelectedKey = "Borad";
+        base.OnInitialized();
+    }
+}
+
+@switch (SelectedKey)
+{
+    case "Borad":
+        <article>
+            <demo.Components.Borad />
+        </article>
+        break;
+
+    case "Editor":
+        <article>
+            <demo.Components.Editor />
+        </article>
+        break;
+
+    case "Console":
+        <article>
+            <demo.Components.Console />
+        </article>
+        break;
+
+    case "CloudShell":
+        <article>
+            <demo.Components.CloudShell />
+        </article>
+        break;
+
+    case "Others":
+        <article>
+            <Label>Others</Label>
+        </article>
+        break;
+
+    default:
+        break;
+}

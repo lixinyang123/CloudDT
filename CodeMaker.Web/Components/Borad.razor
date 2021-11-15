@@ -1,0 +1,142 @@
+﻿@using BlazorFluentUI.Lists
+
+<div style="height:100%; overflow-y: auto;">
+    <DetailsList ItemsSource="InputList"
+         Columns="Columns"
+         GetKey=@(item=>item.Key)
+         LayoutMode="DetailsListLayoutMode.Justified"
+         TItem="DataItem"
+         OnItemInvoked="OnClick"
+         Selection="selection"
+         SelectionMode="SelectionMode.None">
+    </DetailsList>
+</div>
+
+@code {
+    public static class LoremUtils
+    {
+        static string[] LOREM_IPSUM = (
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut " +
+            "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " +
+            "aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore " +
+            "eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+            "mollit anim id est laborum"
+        ).Split(' ');
+
+        public static string Lorem(int wordCount)
+        {
+            return string.Join(' ', LOREM_IPSUM.Take(wordCount));
+        }
+
+        public static string Lorem(int startWord, int wordCount)
+        {
+            return string.Join(' ', LOREM_IPSUM.Skip(startWord).Take(wordCount));
+        }
+    }
+
+    public class DataItem
+    {
+        public string? Key { get; set; }
+        public int KeyNumber { get; set; }
+        public string? DisplayName { get; set; }
+        public string? LongName { get; set; }
+        public string? Description { get; set; }
+        public static string ImgUrl => "redArrow.jpg";
+        public string? GroupName { get; set; }
+        public SelectableOptionMenuItemType Type { get; set; }
+        public static Random random = new();
+
+        public DataItem()
+        {
+
+        }
+
+        public DataItem(int num)
+        {
+            Key = num.ToString();
+            KeyNumber = num;
+            int start = (int)Math.Round(random.NextDouble() * 40);
+            int limitedGrouping = (int)Math.Round(random.NextDouble() * 20);
+            GroupName = LoremUtils.Lorem(limitedGrouping, 1);
+            DisplayName = LoremUtils.Lorem(start, 5); // = num.ToString();
+            Description = LoremUtils.Lorem(start, 5 + (int)Math.Round(random.NextDouble() * 50));
+        }
+
+        public DataItem(string text)
+        {
+            DisplayName = text;
+            Key = text;
+        }
+
+        public DataItem(string text, SelectableOptionMenuItemType selectableOptionMenuItemType)
+        {
+            DisplayName = text;
+            Type = selectableOptionMenuItemType;
+        }
+       
+    }
+
+    System.Collections.Generic.List<DataItem> InputList = new();
+
+    Selection<DataItem> selection = new Selection<DataItem>();
+
+    public System.Collections.Generic.List<IDetailsRowColumn<DataItem>> Columns = new();
+    public System.Collections.Generic.List<IDetailsRowColumn<DataItem>> CustomColumns = new();
+
+    protected override void OnInitialized()
+    {
+        selection.GetKey = (item => item.Key);
+        Columns.Add(new DetailsRowColumn<DataItem>("Key", x => x.KeyNumber) { MaxWidth = 70, Index = 0 });
+        Columns.Add(new DetailsRowColumn<DataItem>("Name", x => x.DisplayName!) { Index = 1, MaxWidth = 150, OnColumnClick = this.OnColumnClick, IsResizable = true });
+        Columns.Add(new DetailsRowColumn<DataItem>("Description", x => x.Description!) { Index = 2 });
+
+        // Do NOT use the DetailsRowColumn with two generic parameters.  It does not create an expression that can be used with DynamicAccessor.
+        CustomColumns.Add(new DetailsRowColumn<DataItem>("Key", x => x.KeyNumber) { MaxWidth = 70, Index = 0 });
+        CustomColumns.Add(new DetailsRowColumn<DataItem>("Name", x => x.DisplayName!) { Index = 1, MaxWidth = 150, OnColumnClick = this.OnColumnClick, IsResizable = true });
+        CustomColumns.Add(new DetailsRowColumn<DataItem, DataItem>("Notes", x => x)
+        {
+            Index = 2,
+            ColumnItemTemplate = obj => @<TextField @bind-Value="obj.Description" @bind-Value:event="OnChange" />
+        });
+
+        for (var i = 0; i< 10; i++)
+        {
+            InputList.Add(new DataItem(i));
+        }
+
+        base.OnInitialized();
+    }
+
+    private void OnColumnClick(IDetailsRowColumn<DataItem> column)
+    {
+        // since we're creating a new list, we need to make a copy of what was previously selected
+        var selected = selection.GetSelection();
+
+        //create new sorted list
+        InputList = new System.Collections.Generic.List<DataItem>(column.IsSorted ? InputList.OrderBy(x => x.DisplayName) : InputList.OrderByDescending(x => x.DisplayName));
+
+        //clear old selection and create new selection
+        //selection.SetKeySelected(selected, true);
+
+        column.IsSorted = !column.IsSorted;
+        StateHasChanged();
+    }
+
+    private void OnClick(DataItem item)
+    {
+        System.Console.WriteLine("Clicked!");
+    }
+
+    private void Delete()
+    {
+
+        foreach (var item in selection.GetSelection())
+        {
+            InputList.Remove(item);
+        }
+        selection = new Selection<DataItem>();
+        //selection.ClearSelection();
+        StateHasChanged();
+    }
+
+}
