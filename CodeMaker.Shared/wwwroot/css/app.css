@@ -28,6 +28,12 @@ a, .btn-link {
     color: red;
 }
 
+#app {
+    height: 100vh;
+    width: 100%;
+    background-color: #1b1a19;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
