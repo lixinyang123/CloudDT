@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inject NavigationManager NavigationManager
+@inherits CodeMaker.Pages.Index
 
 <div class="container-fuild">
 
@@ -34,14 +34,3 @@
         </div>
     </div>
 </div>
-
-@code {
-    private string? Username { get; set; }
-
-    private string? Password { get; set; }
-
-    private void Login()
-    {
-        NavigationManager.NavigateTo("Overview");
-    }
-}

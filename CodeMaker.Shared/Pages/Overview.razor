@@ -1,4 +1,5 @@
 ﻿@page "/Overview"
+@inherits CodeMaker.Pages.Overview
 
 <style>
     article {
@@ -20,16 +21,6 @@
     <PivotItem HeaderText="Others" ItemKey="Others" />
 
 </Pivot>
-
-@code {
-    private string? SelectedKey { get; set; }
-
-    protected override void OnInitialized()
-    {
-        SelectedKey = "Borad";
-        base.OnInitialized();
-    }
-}
 
 @switch (SelectedKey)
 {
