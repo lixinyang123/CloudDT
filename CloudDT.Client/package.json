@@ -1,0 +1,30 @@
+{
+  "name": "clouddt",
+  "version": "1.0.0",
+  "description": "Easy to use code editor with cloud development environment.",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "electron ./src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lixinyang123/CloudDT.git"
+  },
+  "keywords": [
+    "editor",
+    "devenv",
+    "electron"
+  ],
+  "author": "lllxy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lixinyang123/CloudDT/issues"
+  },
+  "homepage": "https://github.com/lixinyang123/CloudDT#readme",
+  "devDependencies": {
+    "electron": "^15.3.1"
+  },
+  "dependencies": {
+    "live-server": "^1.2.1"
+  }
+}

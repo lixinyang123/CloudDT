@@ -1,1 +1,1 @@
-dotnet publish .\CodeMaker.Shared\CodeMaker.Shared.csproj -o ./CodeMaker.Client/publish
+dotnet publish .\CloudDT.Shared\CloudDT.Shared.csproj -o ./CloudDT.Client/publish

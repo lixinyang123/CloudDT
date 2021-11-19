@@ -1,0 +1,22 @@
+﻿@using BlazorFluentUI.Lists
+@using Models
+@inherits CloudDT.Components.Borad
+
+<div style="height: 100%;">
+    
+    <Stack Horizontal="true" HorizontalAlign="Alignment.End" style="height: 5%; margin: 0 40px;">
+        <TextField Placeholder="Please enter text here." ForID="StandardTF" style="margin-right: 5px; width:260px;"/>
+        <PrimaryButton Text="Primary" />
+    </Stack>
+
+    <div style="height: 95%; overflow-y: auto; padding: 0 40px;">
+        <DetailsList ItemsSource="InputList"
+            Columns="Columns"
+            GetKey=@(item=>item.Key)
+            LayoutMode="DetailsListLayoutMode.Justified"
+            TItem="DataItem"
+            Selection="selection"
+            SelectionMode="SelectionMode.None">
+        </DetailsList>
+    </div>
+</div>
