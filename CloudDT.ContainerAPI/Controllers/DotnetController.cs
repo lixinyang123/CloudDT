@@ -2,11 +2,11 @@
 
 namespace CloudDT.ContainerAPI.Controllers
 {
-    public class HomeController : ControllerBase
+    public class DotnetController : ControllerBase
     {
         public IActionResult Index()
         {
-            return Content("Hello Cloud Dev Tools");
+            return Content("Hi .NET");
         }
     }
 }
