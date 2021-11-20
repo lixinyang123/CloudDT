@@ -1,22 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudDT.Shared", "CloudDT.Shared\CloudDT.Shared.csproj", "{29BDC794-CAAA-4FFB-ABE1-F45784C1C722}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudDT.Shared", "CloudDT.Shared\CloudDT.Shared.csproj", "{29BDC794-CAAA-4FFB-ABE1-F45784C1C722}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudDT.ContainerAPI", "CloudDT.ContainerAPI\CloudDT.ContainerAPI.csproj", "{5C646044-717A-4FB7-A4FE-8491FD5CB161}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{29BDC794-CAAA-4FFB-ABE1-F45784C1C722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29BDC794-CAAA-4FFB-ABE1-F45784C1C722}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29BDC794-CAAA-4FFB-ABE1-F45784C1C722}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29BDC794-CAAA-4FFB-ABE1-F45784C1C722}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C646044-717A-4FB7-A4FE-8491FD5CB161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C646044-717A-4FB7-A4FE-8491FD5CB161}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C646044-717A-4FB7-A4FE-8491FD5CB161}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C646044-717A-4FB7-A4FE-8491FD5CB161}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76C117E9-CB12-490E-94E7-704DAB8F6AD2}
 	EndGlobalSection
 EndGlobal
