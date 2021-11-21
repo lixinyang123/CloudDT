@@ -1,12 +1,22 @@
+using CloudDT.ContainerAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CloudDT.ContainerAPI.Controllers
 {
     public class NodeController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly NodeService nodeService;
+
+        public NodeController(NodeService nodeService)
         {
-            return Content("Hi Node");
+            this.nodeService = nodeService;
+        }
+
+        [HttpPost]
+        public IActionResult Index(string code)
+        {
+            nodeService.Save(code).Run();
+            return Ok();
         }
     }
 }

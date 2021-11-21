@@ -1,12 +1,22 @@
+using CloudDT.ContainerAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CloudDT.ContainerAPI.Controllers
 {
     public class PythonController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly PythonService pythonService;
+        
+        public PythonController(PythonService pythonService)
         {
-            return Content("Hi Python");
+            this.pythonService = pythonService;
+        }
+
+        [HttpPost]
+        public IActionResult Index(string code)
+        {
+            pythonService.Save(code).Run();
+            return Ok();
         }
     }
 }

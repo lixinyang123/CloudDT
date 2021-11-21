@@ -1,23 +1,20 @@
-using System.Diagnostics;
-using CloudDT.ContainerAPI.Interfaces;
+using CloudDT.ContainerAPI.Models;
 
 namespace CloudDT.ContainerAPI.Services;
 
-public class NodeService : ICodeService
+public class NodeService
 {
-    private readonly string savePath = "main.js";
+    private static string savePath = $"{Configurator.EnvPath}/Node/main.js";
 
-    public void Save(string code)
+    public NodeService Save(string code)
     {
         File.WriteAllText(savePath, code);
+        return this;
     }
 
     public void Run()
     {
-        ProcessStartInfo startInfo = new()
-        {
-            FileName = "ttyd -o -p 8435",
-            Arguments = $"node {savePath}"
-        };
+        string command = $"node {savePath}";
+        TTYD.Run(command);
     }
 }

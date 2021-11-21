@@ -1,16 +1,20 @@
-using CloudDT.ContainerAPI.Interfaces;
+using CloudDT.ContainerAPI.Models;
 
 namespace CloudDT.ContainerAPI.Services;
 
-public class PythonService : ICodeService
+public class PythonService
 {
-    public void Save(string code)
+    private static string savePath = $"{Configurator.EnvPath}/Python/main.py";
+
+    public PythonService Save(string code)
     {
-        throw new NotImplementedException();
+        File.WriteAllText(savePath, code);
+        return this;
     }
 
     public void Run()
     {
-        throw new NotImplementedException();
+        string command = $"python {savePath}";
+        TTYD.Run(command);
     }
 }

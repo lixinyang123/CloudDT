@@ -1,4 +1,14 @@
+using CloudDT.ContainerAPI.Models;
+using CloudDT.ContainerAPI.Services;
+
+Configurator.InitEnv();
+TTYD.StartShell();
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<NodeService>();
+builder.Services.AddSingleton<DotnetService>();
+builder.Services.AddSingleton<PythonService>();
 
 builder.Services.AddControllers();
 

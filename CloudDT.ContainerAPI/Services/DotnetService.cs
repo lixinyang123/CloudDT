@@ -1,21 +1,21 @@
-using CloudDT.ContainerAPI.Interfaces;
+using CloudDT.ContainerAPI.Models;
 
 namespace CloudDT.ContainerAPI.Services;
 
-public class DotnetService : ICodeService, ICompileService
+public class DotnetService
 {
-    public void Save(string code)
+    private static string savePath = $"{Configurator.EnvPath}/Dotnet/Program.cs";
+    private static string projPath = $"{Configurator.EnvPath}/Dotnet/demo.csproj";
+
+    public DotnetService Save(string code)
     {
-        throw new NotImplementedException();
-    }
-    
-    public void Compile()
-    {
-        throw new NotImplementedException();
+        File.WriteAllText(savePath, code);
+        return this;
     }
 
     public void Run()
     {
-        throw new NotImplementedException();
+        string command = $"dotnet run --project {projPath}";
+        TTYD.Run(command);
     }
 }
