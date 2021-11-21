@@ -11,6 +11,28 @@
                 <div style="height: 5%;">
                     <CloudDT.Shared.UserControls.ToolBar />
                 </div>
+                <DefaultButton Text="Open Large Dialog" OnClick=@(args=> largeDialogOpen=true) />
+                <Dialog Title="This is a large dialog menu."
+                        SubText="This is the subtext area.  Below is the ChildContent area for components."
+                        IsOpen=@largeDialogOpen
+                        IsBlocking=@isBlocking
+                        DialogType=@DialogType.LargeHeader
+                        OnDismiss=@(args=> largeDialogOpen=false )>
+                    <ChildContent>
+                        <p>
+                            <TextField Label="Sample TextField" />
+                        </p>
+                        <p>
+                            <Dropdown ItemsSource=@items!.Select(x=>new DropdownOption { Key = x.CodeName!, Text = x.Description})
+                                      Placeholder="Select an option"
+                                      OnChange=@UncontrolledSingleChangeHandler />
+                        </p>
+                    </ChildContent>
+                    <FooterTemplate>
+                        <PrimaryButton Text="OK" OnClick=@(args=> largeDialogOpen=false) />
+                        <DefaultButton Text="Cancel" OnClick=@(args=> largeDialogOpen=false) />
+                    </FooterTemplate>
+                </Dialog>
                 <div style="height: 95%;">
                     <CloudDT.Shared.UserControls.Monaco />
                 </div>
