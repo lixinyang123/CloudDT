@@ -6,11 +6,11 @@ namespace CloudDT.UserControls
 {
     public partial class Monaco : ComponentBase
     {
-        [Inject] IJSRuntime? jsRuntime { get; set; }
+        [Inject] IJSRuntime? JSRuntime { get; set; }
 
         protected override Task OnAfterRenderAsync(bool firstRender)
         {
-            jsRuntime?.InvokeVoidAsync("initEditor");
+            JSRuntime?.InvokeVoidAsync("initEditor");
             return base.OnAfterRenderAsync(firstRender);
         }
     }

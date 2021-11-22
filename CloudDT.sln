@@ -5,7 +5,12 @@ VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudDT.Shared", "CloudDT.Shared\CloudDT.Shared.csproj", "{29BDC794-CAAA-4FFB-ABE1-F45784C1C722}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudDT.ContainerAPI", "CloudDT.ContainerAPI\CloudDT.ContainerAPI.csproj", "{5C646044-717A-4FB7-A4FE-8491FD5CB161}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudDT.ContainerAPI", "CloudDT.ContainerAPI\CloudDT.ContainerAPI.csproj", "{5C646044-717A-4FB7-A4FE-8491FD5CB161}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{22C94666-69C6-4F86-BF8F-7F48CAB01DCB}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

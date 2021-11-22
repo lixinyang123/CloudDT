@@ -1,50 +1,75 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using BlazorFluentUI;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Collections.Generic;
 
 namespace CloudDT.UserControls
 {
     public partial class ToolBar : ComponentBase
     {
-        private System.Windows.Input.ICommand? runCommand;
-        private System.Windows.Input.ICommand? saveCommand;
-        private System.Windows.Input.ICommand? stopCommand; 
-        private System.Windows.Input.ICommand? searchCommand;
-        private System.Windows.Input.ICommand? shareCommand;
-        public List<CommandBarItem>? items;
+        [Inject] IJSRuntime? JSRuntime { get; set; }
 
-        protected override Task OnInitializedAsync()
+        private bool showDialog = false;
+
+        public bool ShowDialog
         {
-            runCommand = new RelayCommand((p) =>
+            get => showDialog;
+            set
             {
-            });
-
-            saveCommand = new RelayCommand((p) =>
-            {
-            });
-
-            stopCommand = new RelayCommand((p) =>{
-                
-            });
-
-            searchCommand = new RelayCommand((p) =>{
-                
-            });
-
-            shareCommand = new RelayCommand((p) =>{
-                
-            });
-
-            items = new List<CommandBarItem> 
-            {
-                new CommandBarItem() {Text= "Run", IconName="play", Key="1", Command=runCommand},
-                new CommandBarItem() {Text= "Stop", IconName="checkbox_unchecked", Key="2", Command=stopCommand},
-                new CommandBarItem() {Text= "Save", IconName="save", Key="4", Command=saveCommand},
-                new CommandBarItem() {Text= "Search", IconName="search", Key="3", Command=searchCommand},
-                new CommandBarItem() {Text= "Share", IconName="share", Key="5", Command=shareCommand}
-            };
-            return Task.CompletedTask;
+                showDialog = value;
+                StateHasChanged();
+            }
         }
+
+        private bool showOffcanvas = false;
+
+        public bool ShowOffcanvas
+        {
+            get => showOffcanvas;
+            set
+            {
+                showOffcanvas = value;
+                StateHasChanged();
+            }
+        }
+
+        public string ModalShow { get => showDialog ? "show" : string.Empty; }
+
+        public string ModalDisplay { get => showDialog ? "block" : "none"; }
+
+        public string OffcanvasShow { get => showOffcanvas ? "show" : string.Empty; }
+
+        public string OffcanvasVisibility { get => showOffcanvas ? "visible" : "hidden"; }
+
+        public List<CommandBarItem>? CommandBarItems { get; set; }
+
+        public ToolBar()
+        {
+            CommandBarItems = new List<CommandBarItem>
+            {
+                new CommandBarItem() {Text= "Run", IconName="play", Key="1", Command=new RelayCommand(Run) },
+                new CommandBarItem() {Text= "Stop", IconName="checkbox_unchecked", Key="2", Command=new RelayCommand(Stop) },
+                new CommandBarItem() {Text= "Save", IconName="save", Key="4", Command=new RelayCommand(Save) },
+                new CommandBarItem() {Text= "Search", IconName="search", Key="3", Command=new RelayCommand(OpenFind) },
+                new CommandBarItem() {Text= "Share", IconName="share", Key="5" }
+            };
+        }
+
+        public void Run(object? args)
+        {
+            ShowOffcanvas = true;
+        }
+
+        public void Stop(object? args)
+        {
+            ShowOffcanvas = false;
+        }
+
+        public void Save(object? args)
+        {
+            ShowDialog = true;
+        }
+
+        private void OpenFind(object? args) => JSRuntime?.InvokeVoidAsync("openFind");
     }
 }

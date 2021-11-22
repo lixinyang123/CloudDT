@@ -1,3 +1,30 @@
 ﻿@inherits CloudDT.UserControls.ToolBar
 
-<CommandBar Items=@items />
+<CommandBar Items=@CommandBarItems />
+
+<div class="modal fade @ModalShow" id="exampleModal" tabindex="-1" aria-hidden="true" style="display: @ModalDisplay;">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow animate__animated animate__bounceIn">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close btn-close-white" @onclick=@(() => ShowDialog = false)></button>
+            </div>
+
+            <div class="modal-body">
+                ...
+            </div>
+
+            <div class="modal-footer">
+                <DefaultButton OnClick=@(() => ShowDialog = false) Text="Close"/>
+                <PrimaryButton Text="Save changes"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-bottom @OffcanvasShow" tabindex="-1" id="offcanvasBottom" style="visibility: @OffcanvasVisibility;">
+    <button type="button" class="btn-close btn-close-white text-reset" @onclick=@(() => ShowOffcanvas = false)></button>
+    <div class="offcanvas-body">
+        ...
+    </div>
+</div>

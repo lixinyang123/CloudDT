@@ -4,7 +4,7 @@ console.log(\`
             -                                                -
            |    _________________________________________     |
            |   |                                         |    |
-           |   |  C:\\> Hello CloudDT_                  |    |
+           |   |  C:/ > Hello CloudDT_                   |    |
            |   |                                         |    |
            |   |                                         |    |
            |   |                                         |    |
@@ -32,12 +32,18 @@ console.log(\`
 \`);
 `;
 
+var editor;
+
 function initEditor() {
-    var editor = monaco.editor.create(document.querySelector('#editor'), {
+    editor = monaco.editor.create(document.querySelector('#editor'), {
         value: code,
         language: 'javascript',
         theme: 'vs-dark',
         automaticLayout: true,
         scrollBeyondLastLine: false
     });
+}
+
+function openFind() {
+    editor.getAction("actions.find").run();
 }

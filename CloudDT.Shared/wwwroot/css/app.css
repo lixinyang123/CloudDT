@@ -28,6 +28,30 @@ a, .btn-link {
     color: red;
 }
 
+.modal-content, .offcanvas {
+    background-color: #272523;
+    border-radius: 2px;
+}
+
+.modal-header, .offcanvas-body {
+    border-top: solid #3AA0F3;
+    border-bottom: 0;
+}
+
+.offcanvas .btn-close {
+    position: absolute;
+    right: 7px;
+    top: 10px;
+}
+
+.modal-footer {
+    border-top: 0;
+}
+
+.offcanvas {
+    height: 45vh;
+}
+
 #app {
     height: 100vh;
     width: 100%;
