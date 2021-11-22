@@ -10,7 +10,7 @@
 
 <Pivot AriaLabel="CloudDT" @bind-SelectedKey=SelectedKey>
 
-    <PivotItem HeaderText="Borad" ItemKey="Borad" />
+    <PivotItem HeaderText="Board" ItemKey="Board" />
 
     <PivotItem HeaderText="Editor" ItemKey="Editor" />
     
@@ -24,9 +24,9 @@
 
 @switch (SelectedKey)
 {
-    case "Borad":
+    case "Board":
         <article>
-            <CloudDT.Shared.Components.Borad />
+            <CloudDT.Shared.Components.Board />
         </article>
         break;
 
@@ -39,18 +39,6 @@
     case "Console":
         <article>
             <CloudDT.Shared.Components.Console />
-        </article>
-        break;
-
-    case "CloudShell":
-        <article>
-            <CloudDT.Shared.Components.CloudShell />
-        </article>
-        break;
-
-    case "Others":
-        <article>
-            <Label>Others</Label>
         </article>
         break;
 

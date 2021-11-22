@@ -8,7 +8,7 @@ namespace CloudDT.Pages
 
         protected override void OnInitialized()
         {
-            SelectedKey = "Borad";
+            SelectedKey = "Board";
             base.OnInitialized();
         }
     }
