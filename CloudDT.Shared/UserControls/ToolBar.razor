@@ -1,6 +1,16 @@
 ﻿@inherits CloudDT.UserControls.ToolBar
 
-<CommandBar Items=@CommandBarItems />
+<CommandBar Items=@CommandBarItems Style="float: left; width: 500px;" />
+
+<div class="btn-group" style="width: 200px; float: right;">
+    <button class="btn btn-sm btn-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown">@CurrentLanguage</button>
+    <ul class="dropdown-menu">
+        @foreach (string item in DropdownItems)
+        {
+            <li><a class="dropdown-item" @onclick=@(() => CurrentLanguage = item) >@item</a></li>
+        }
+    </ul>
+</div>
 
 <div class="modal fade @ModalShow" id="exampleModal" tabindex="-1" aria-hidden="true" style="display: @ModalDisplay;">
     <div class="modal-dialog modal-dialog-centered">

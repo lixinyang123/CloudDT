@@ -2,12 +2,12 @@ using CloudDT.ContainerAPI.Models;
 
 namespace CloudDT.ContainerAPI.Services;
 
-public class DotnetService
+public class CSharpService
 {
     private static string savePath = $"{Configurator.EnvPath}/Dotnet/Program.cs";
     private static string projPath = $"{Configurator.EnvPath}/Dotnet/demo.csproj";
 
-    public DotnetService Save(string code)
+    public CSharpService Save(string code)
     {
         File.WriteAllText(savePath, code);
         return this;

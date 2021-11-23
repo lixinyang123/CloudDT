@@ -52,6 +52,25 @@ a, .btn-link {
     height: 45vh;
 }
 
+.btn-dropdown {
+    border-radius: 2px;
+    border: 1px solid #3AA0F3;
+    margin-right: 20px;
+    color: whitesmoke;
+}
+
+.dropdown-menu {
+    background-color: #272523;
+}
+
+.dropdown-menu a {
+    color: whitesmoke;
+}
+
+.dropdown-menu li {
+    cursor: pointer;
+}
+
 #app {
     height: 100vh;
     width: 100%;

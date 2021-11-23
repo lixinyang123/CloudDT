@@ -5,9 +5,9 @@ namespace CloudDT.ContainerAPI.Controllers
 {
     public class DotnetController : ControllerBase
     {
-        private readonly DotnetService dotnetService;
+        private readonly CSharpService dotnetService;
 
-        public DotnetController(DotnetService dotnetService)
+        public DotnetController(CSharpService dotnetService)
         {
             this.dotnetService = dotnetService;
         }

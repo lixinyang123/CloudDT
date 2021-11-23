@@ -41,17 +41,36 @@ namespace CloudDT.UserControls
 
         public string OffcanvasVisibility { get => showOffcanvas ? "visible" : "hidden"; }
 
-        public List<CommandBarItem>? CommandBarItems { get; set; }
+        public List<CommandBarItem> CommandBarItems { get; set; }
+
+        public List<string> DropdownItems { get; set; }
+
+        private string? currentLanguage;
+
+        public string CurrentLanguage
+        {
+            get => currentLanguage ?? "Language";
+            set
+            {
+                currentLanguage = value;
+                StateHasChanged();
+            }
+        }
 
         public ToolBar()
         {
-            CommandBarItems = new List<CommandBarItem>
+            CommandBarItems = new List<CommandBarItem>()
             {
                 new CommandBarItem() {Text= "Run", IconName="play", Key="1", Command=new RelayCommand(Run) },
                 new CommandBarItem() {Text= "Stop", IconName="checkbox_unchecked", Key="2", Command=new RelayCommand(Stop) },
                 new CommandBarItem() {Text= "Save", IconName="save", Key="4", Command=new RelayCommand(Save) },
                 new CommandBarItem() {Text= "Search", IconName="search", Key="3", Command=new RelayCommand(OpenFind) },
                 new CommandBarItem() {Text= "Share", IconName="share", Key="5" }
+            };
+
+            DropdownItems = new List<string>()
+            {
+                "Node", "Python", "CSharp"
             };
         }
 

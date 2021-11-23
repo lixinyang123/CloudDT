@@ -7,7 +7,7 @@ TTYD.StartShell();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<NodeService>();
-builder.Services.AddSingleton<DotnetService>();
+builder.Services.AddSingleton<CSharpService>();
 builder.Services.AddSingleton<PythonService>();
 
 builder.Services.AddControllers();
