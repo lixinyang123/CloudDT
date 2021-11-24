@@ -10,7 +10,7 @@ namespace CloudDT.UserControls
 
         protected override Task OnAfterRenderAsync(bool firstRender)
         {
-            ((IJSInProcessRuntime)JSRuntime!)?.InvokeVoid("initEditor");
+            JSRuntime?.InvokeVoidAsync("initEditor").AsTask();
             return base.OnAfterRenderAsync(firstRender);
         }
     }

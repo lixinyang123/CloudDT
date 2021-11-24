@@ -1,7 +1,9 @@
 using BlazorFluentUI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CloudDT.UserControls
 {
@@ -43,7 +45,7 @@ namespace CloudDT.UserControls
 
         public List<CommandBarItem> CommandBarItems { get; set; }
 
-        public List<string> DropdownItems { get; set; }
+        public Dictionary<string, string> DropdownItems { get; set; }
 
         private string? currentLanguage;
 
@@ -53,6 +55,7 @@ namespace CloudDT.UserControls
             set
             {
                 currentLanguage = value;
+                JSRuntime?.InvokeVoidAsync("initEditor", DropdownItems.SingleOrDefault(i => i.Key == value).Value);
                 StateHasChanged();
             }
         }
@@ -68,9 +71,11 @@ namespace CloudDT.UserControls
                 new CommandBarItem() {Text= "Share", IconName="share", Key="5" }
             };
 
-            DropdownItems = new List<string>()
+            DropdownItems = new Dictionary<string, string>
             {
-                "Node", "Python", "CSharp"
+                { "Node", "javascript" },
+                { "Python", "python" },
+                { "CSharp", "csharp" }
             };
         }
 
@@ -86,7 +91,7 @@ namespace CloudDT.UserControls
 
         public void Save(object? args)
         {
-            string str = GetValue();
+            Console.WriteLine(GetValue());
             ShowDialog = true;
         }
 
