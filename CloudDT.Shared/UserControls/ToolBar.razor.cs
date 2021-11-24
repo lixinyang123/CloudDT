@@ -1,14 +1,22 @@
+using Blazored.LocalStorage;
 using BlazorFluentUI;
+using CloudDT.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CloudDT.UserControls
 {
     public partial class ToolBar : ComponentBase
     {
-        [Inject] IJSRuntime? JSRuntime { get; set; }
+        [Inject]
+        ILocalStorageService? LocalStorage { get; set; }
+
+        [Inject]
+        IJSRuntime? JSRuntime { get; set; }
 
         private bool showDialog = false;
 
@@ -42,9 +50,11 @@ namespace CloudDT.UserControls
 
         public string OffcanvasVisibility { get => showOffcanvas ? "visible" : "hidden"; }
 
-        public List<CommandBarItem> CommandBarItems { get; set; }
+        public List<CommandBarItem>? CommandBarItems { get; set; }
 
-        public Dictionary<string, string> DropdownItems { get; set; }
+        public Dictionary<string, string>? DropdownItems { get; set; }
+
+        public List<CodeSnippet>? CodeSnippets { get; set; }
 
         private string? currentLanguage;
 
@@ -57,7 +67,7 @@ namespace CloudDT.UserControls
 
                 JSRuntime?.InvokeVoidAsync(
                     "initEditor",
-                    DropdownItems.SingleOrDefault(i => i.Key == value).Value
+                    DropdownItems?.SingleOrDefault(i => i.Key == value).Value
                 ).AsTask();
 
                 StateHasChanged();
@@ -68,7 +78,7 @@ namespace CloudDT.UserControls
 
         public string? Description { get; set; }
 
-        public ToolBar()
+        protected override async Task OnInitializedAsync()
         {
             CommandBarItems = new List<CommandBarItem>()
             {
@@ -114,6 +124,14 @@ namespace CloudDT.UserControls
                 { "Python", "python" },
                 { "CSharp", "csharp" }
             };
+
+            await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            CodeSnippets = await LocalStorage!.GetItemAsync<List<CodeSnippet>>("CodeSnippets") ?? new List<CodeSnippet>();
+            await base.OnAfterRenderAsync(firstRender);
         }
 
         public void Run(object? args)
@@ -126,15 +144,22 @@ namespace CloudDT.UserControls
             ShowOffcanvas = false;
         }
 
-        public void Save()
+        public async Task Save()
         {
-            //CodeSnippetService?.AddSnippet(new()
-            //{
-            //    Id = Guid.NewGuid().ToString(),
-            //    Name = Name,
-            //    Language = CurrentLanguage,
-            //    Description = Description
-            //});
+            CodeSnippet snippet = new()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = Name,
+                Language = CurrentLanguage,
+                Description = Description
+            };
+
+            CodeSnippets?.Add(snippet);
+
+            await LocalStorage!.SetItemAsync("CodeSnippets", CodeSnippets);
+            await LocalStorage!.SetItemAsync($"Snippet-{snippet.Id}", GetCode());
+
+            ShowDialog = false;
         }
 
         private void OpenFind(object? args) => JSRuntime?.InvokeVoidAsync("openFind").AsTask().Wait();
