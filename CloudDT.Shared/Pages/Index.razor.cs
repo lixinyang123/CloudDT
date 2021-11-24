@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace CloudDT.Pages
 {
-    public class Index : ComponentBase 
+    public class Index : ComponentBase
     {
         public string? Username { get; set; }
 

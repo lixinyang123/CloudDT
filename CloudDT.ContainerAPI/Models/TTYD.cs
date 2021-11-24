@@ -20,7 +20,7 @@ public static class TTYD
 
     public static void Run(string command)
     {
-        if(process is not null)
+        if (process is not null)
             process.Close();
 
         process = new()
