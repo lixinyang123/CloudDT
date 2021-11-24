@@ -21,12 +21,20 @@
             </div>
 
             <div class="modal-body">
-                ...
+                <div class="textFieldDiv">
+                    <Label HtmlFor="StandardTF">Name</Label>
+                    <TextField ForID="StandardTF" @bind-Value=Name/>
+                </div>
+
+                <div class="textFieldDiv">
+                    <Label HtmlFor="StandardTF">Description</Label>
+                    <TextField ForID="StandardTF" @bind-Value=Description/>
+                </div>
             </div>
 
             <div class="modal-footer">
                 <DefaultButton OnClick=@(() => ShowDialog = false) Text="Close"/>
-                <PrimaryButton Text="Save changes"/>
+                <PrimaryButton Text="Save changes" OnClick=Save/>
             </div>
         </div>
     </div>

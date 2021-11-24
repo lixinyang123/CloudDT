@@ -1,4 +1,5 @@
 using BlazorFluentUI;
+using CloudDT.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -60,13 +61,17 @@ namespace CloudDT.UserControls
             }
         }
 
+        public string? Name { get; set; }
+
+        public string? Description { get; set; }
+
         public ToolBar()
         {
             CommandBarItems = new List<CommandBarItem>()
             {
                 new CommandBarItem() {Text= "Run", IconName="play", Key="1", Command=new RelayCommand(Run) },
                 new CommandBarItem() {Text= "Stop", IconName="checkbox_unchecked", Key="2", Command=new RelayCommand(Stop) },
-                new CommandBarItem() {Text= "Save", IconName="save", Key="4", Command=new RelayCommand(Save) },
+                new CommandBarItem() {Text= "Save", IconName="save", Key="4", Command=new RelayCommand(args => ShowDialog = true) },
                 new CommandBarItem() {Text= "Search", IconName="search", Key="3", Command=new RelayCommand(OpenFind) },
                 new CommandBarItem() {Text= "Share", IconName="share", Key="5" }
             };
@@ -89,10 +94,17 @@ namespace CloudDT.UserControls
             ShowOffcanvas = false;
         }
 
-        public void Save(object? args)
+        public void Save()
         {
-            Console.WriteLine(GetValue());
-            ShowDialog = true;
+            CodeSnippet snippet = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = Name,
+                Language = CurrentLanguage,
+                Description = Description
+            };
+
+            
         }
 
         private void OpenFind(object? args) => JSRuntime?.InvokeVoidAsync("openFind").AsTask();
