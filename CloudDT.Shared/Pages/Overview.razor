@@ -1,13 +1,6 @@
 ﻿@page "/Overview"
 @inherits CloudDT.Pages.Overview
 
-<style>
-    article {
-        height: calc(100vh - 45px);
-        width: 100%;
-    }
-</style>
-
 <Pivot AriaLabel="CloudDT" @bind-SelectedKey=SelectedKey>
 
     <PivotItem HeaderText="Board" ItemKey="Board" />

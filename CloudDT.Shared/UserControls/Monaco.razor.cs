@@ -6,7 +6,8 @@ namespace CloudDT.UserControls
 {
     public partial class Monaco : ComponentBase
     {
-        [Inject] IJSRuntime? JSRuntime { get; set; }
+        [Inject] 
+        private IJSRuntime? JSRuntime { get; set; }
 
         protected override Task OnAfterRenderAsync(bool firstRender)
         {

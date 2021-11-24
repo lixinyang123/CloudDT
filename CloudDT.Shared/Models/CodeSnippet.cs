@@ -1,10 +1,8 @@
-using System;
-
 namespace CloudDT.Models
 {
     public class CodeSnippet
     {
-        public Guid? Id { get; set; }
+        public string? Id { get; set; }
 
         public string? Name { get; set; }
 

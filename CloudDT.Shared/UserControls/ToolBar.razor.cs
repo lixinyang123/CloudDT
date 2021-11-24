@@ -1,5 +1,4 @@
 using BlazorFluentUI;
-using CloudDT.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -56,7 +55,12 @@ namespace CloudDT.UserControls
             set
             {
                 currentLanguage = value;
-                JSRuntime?.InvokeVoidAsync("initEditor", DropdownItems.SingleOrDefault(i => i.Key == value).Value);
+
+                JSRuntime?.InvokeVoidAsync(
+                    "initEditor",
+                    DropdownItems.SingleOrDefault(i => i.Key == value).Value
+                ).AsTask();
+
                 StateHasChanged();
             }
         }
@@ -69,11 +73,40 @@ namespace CloudDT.UserControls
         {
             CommandBarItems = new List<CommandBarItem>()
             {
-                new CommandBarItem() {Text= "Run", IconName="play", Key="1", Command=new RelayCommand(Run) },
-                new CommandBarItem() {Text= "Stop", IconName="checkbox_unchecked", Key="2", Command=new RelayCommand(Stop) },
-                new CommandBarItem() {Text= "Save", IconName="save", Key="4", Command=new RelayCommand(args => ShowDialog = true) },
-                new CommandBarItem() {Text= "Search", IconName="search", Key="3", Command=new RelayCommand(OpenFind) },
-                new CommandBarItem() {Text= "Share", IconName="share", Key="5" }
+                new CommandBarItem()
+                {
+                    Text= "Run",
+                    IconName="play",
+                    Key="1",
+                    Command=new RelayCommand(Run)
+                },
+                new CommandBarItem()
+                {
+                    Text= "Stop",
+                    IconName="checkbox_unchecked",
+                    Key="2",
+                    Command=new RelayCommand(Stop)
+                },
+                new CommandBarItem()
+                {
+                    Text= "Save",
+                    IconName="save",
+                    Key="4",
+                    Command=new RelayCommand(args => ShowDialog = true)
+                },
+                new CommandBarItem()
+                {
+                    Text= "Search",
+                    IconName="search",
+                    Key="3",
+                    Command=new RelayCommand(OpenFind)
+                },
+                new CommandBarItem()
+                {
+                    Text= "Share",
+                    IconName="share",
+                    Key="5"
+                }
             };
 
             DropdownItems = new Dictionary<string, string>
@@ -96,19 +129,17 @@ namespace CloudDT.UserControls
 
         public void Save()
         {
-            CodeSnippet snippet = new()
-            {
-                Id = Guid.NewGuid(),
-                Name = Name,
-                Language = CurrentLanguage,
-                Description = Description
-            };
-
-            
+            //CodeSnippetService?.AddSnippet(new()
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    Name = Name,
+            //    Language = CurrentLanguage,
+            //    Description = Description
+            //});
         }
 
-        private void OpenFind(object? args) => JSRuntime?.InvokeVoidAsync("openFind").AsTask();
+        private void OpenFind(object? args) => JSRuntime?.InvokeVoidAsync("openFind").AsTask().Wait();
 
-        public string GetValue() => ((IJSInProcessRuntime)JSRuntime!).Invoke<string>("getCode");
+        public string GetCode() => ((IJSInProcessRuntime)JSRuntime!).Invoke<string>("getCode");
     }
 }

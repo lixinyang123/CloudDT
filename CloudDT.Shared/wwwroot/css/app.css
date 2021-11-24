@@ -116,6 +116,11 @@ a, .btn-link {
     content: "An error has occurred."
 }
 
+article {
+    height: calc(100vh - 45px);
+    width: 100%;
+}
+
 #editor {
     height: 100%;
     width: 100%;
