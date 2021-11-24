@@ -47,3 +47,7 @@ function initEditor() {
 function openFind() {
     editor.getAction("actions.find").run();
 }
+
+function getCode() {
+    return editor.getValue();
+}

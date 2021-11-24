@@ -86,9 +86,12 @@ namespace CloudDT.UserControls
 
         public void Save(object? args)
         {
+            string str = GetValue();
             ShowDialog = true;
         }
 
-        private void OpenFind(object? args) => JSRuntime?.InvokeVoidAsync("openFind");
+        private void OpenFind(object? args) => JSRuntime?.InvokeVoidAsync("openFind").AsTask();
+
+        public string GetValue() => ((IJSInProcessRuntime)JSRuntime!).Invoke<string>("getCode");
     }
 }
