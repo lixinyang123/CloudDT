@@ -11,9 +11,9 @@ namespace CloudDT.Components
     {
         [Inject] ILocalStorageService? LocalStorage { get; set; }
 
-        public List<DataItem>? InputList { get; set; }
+        public List<CodeSnippet>? InputList { get; set; }
 
-        public List<IDetailsRowColumn<DataItem>>? Columns { get; set; }
+        public List<IDetailsRowColumn<CodeSnippet>>? Columns { get; set; }
 
         protected async void InitBoradList(string key)
         {
@@ -21,16 +21,16 @@ namespace CloudDT.Components
 
             if (!string.IsNullOrEmpty(codeCache))
             {
-                InputList = JsonSerializer.Deserialize<List<DataItem>>(codeCache);
+                InputList = JsonSerializer.Deserialize<List<CodeSnippet>>(codeCache);
             }
         }
 
         protected override void OnInitialized()
         {
             InitBoradList("codeCache");
-            Columns?.Add(new DetailsRowColumn<DataItem>("CodeLanguage", x => x.CodeLanguage!) { MaxWidth = 70, Index = 0 });
-            Columns?.Add(new DetailsRowColumn<DataItem>("CodeName", x => x.CodeName!) { Index = 1, MaxWidth = 150, IsResizable = true });
-            Columns?.Add(new DetailsRowColumn<DataItem>("Description", x => x.Description!) { Index = 2 });
+            Columns?.Add(new DetailsRowColumn<CodeSnippet>("CodeLanguage", x => x.CodeLanguage!) { MaxWidth = 70, Index = 0 });
+            Columns?.Add(new DetailsRowColumn<CodeSnippet>("CodeName", x => x.CodeName!) { Index = 1, MaxWidth = 150, IsResizable = true });
+            Columns?.Add(new DetailsRowColumn<CodeSnippet>("Description", x => x.Description!) { Index = 2 });
             base.OnInitialized();
         }
     }
