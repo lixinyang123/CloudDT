@@ -2,19 +2,66 @@
 
 <div class="container-fluid" style="height: 100%">
     <div class="row" style="height: 100%;">
-        <div class="col-2 p-4">
-            <CloudDT.Shared.UserControls.TreeView />
+        <div class="col-2">
+            <NavBar Grow="1" Direction="LayoutDirection.Vertical" Items=@NavBarItems />
         </div>
 
         <div class="col-10" style="height: 100%">
             <div class="row" style="height: 100%">
                 <div style="height: 40px;">
-                    <CloudDT.Shared.UserControls.EditorToolBar />
+                    <CommandBar Items=@CommandBarItems Style="float: left; width: 500px;" />
+
+                    <div class="btn-group float-end" style="width: 200px;">
+                        <button class="btn btn-sm btn-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown">@CurrentLanguage</button>
+                        <ul class="dropdown-menu">
+                            @foreach (var item in DropdownItems!)
+                            {
+                                <li><a class="dropdown-item" @onclick=@(() => CurrentLanguage = item.Key) >@item.Key</a></li>
+                            }
+                        </ul>
+                    </div>
                 </div>
                 <div style="height: calc(100% - 40px);">
-                    <CloudDT.Shared.UserControls.Monaco />
+                    <div id="editor-container" style="height: 100%; width: 100%;">
+                        <div id="editor"></div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="modal fade @ModalShow" id="exampleModal" tabindex="-1" aria-hidden="true" style="display: @ModalDisplay;">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow animate__animated animate__bounceIn">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Save CodeSnippets</h5>
+                <button type="button" class="btn-close btn-close-white" @onclick=@(() => ShowDialog = false)></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="textFieldDiv">
+                    <Label HtmlFor="StandardTF">Name</Label>
+                    <TextField ForID="StandardTF" @bind-Value=Name/>
+                </div>
+
+                <div class="textFieldDiv">
+                    <Label HtmlFor="StandardTF">Description</Label>
+                    <TextField ForID="StandardTF" @bind-Value=Description/>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <DefaultButton OnClick=@(() => ShowDialog = false) Text="Close"/>
+                <PrimaryButton Text="Save changes" OnClick=Save/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-bottom @OffcanvasShow" tabindex="-1" id="offcanvasBottom" style="visibility: @OffcanvasVisibility;">
+    <button type="button" class="btn-close btn-close-white text-reset" @onclick=@(() => ShowOffcanvas = false)></button>
+    <div class="offcanvas-body">
+        ...
     </div>
 </div>

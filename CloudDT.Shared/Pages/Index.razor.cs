@@ -12,7 +12,7 @@ namespace CloudDT.Shared.Pages
 
         public void Login()
         {
-            NavigationManager?.NavigateTo("Overview");
+            NavigationManager?.NavigateTo("/Overview");
         }
     }
 }

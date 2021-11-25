@@ -44,11 +44,14 @@
 
 var editor;
 
-function initEditor(lang) {
+function initEditor(lang, code) {
     document.querySelector("#editor-container").innerHTML = `<div id="editor"></div>`;
 
+    if (!code)
+        code = getTemplete(lang);
+
     editor = monaco.editor.create(document.querySelector('#editor'), {
-        value: getTemplete(lang),
+        value: code,
         language: lang,
         theme: 'vs-dark',
         automaticLayout: true,
