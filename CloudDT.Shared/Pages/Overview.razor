@@ -9,6 +9,8 @@
     
     <PivotItem HeaderText="Console" ItemKey="Console" />
 
+    <PivotItem HeaderText="CloudShell" ItemKey="CloudShell" />
+
 </Pivot>
 
 @switch (SelectedKey)
@@ -28,6 +30,12 @@
     case "Console":
         <article>
             <CloudDT.Shared.Components.Console />
+        </article>
+        break;
+
+    case "CloudShell":
+        <article>
+            <CloudDT.Shared.Components.CloudShell />
         </article>
         break;
 
