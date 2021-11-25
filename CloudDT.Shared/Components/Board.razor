@@ -3,11 +3,18 @@
 @inherits CloudDT.Components.Borad
 
 <div style="height: 100%;">
-    
-    <Stack Horizontal="true" HorizontalAlign="Alignment.End" style="height: 5%; margin: 0 40px;">
-        <TextField Placeholder="Please enter text here." ForID="StandardTF" style="margin-right: 5px; width:260px;"/>
-        <PrimaryButton Text="Primary" />
+
+    <Stack Horizontal="true" HorizontalAlign="Alignment.End">
+        <Stack Horizontal="true" HorizontalAlign="Alignment.Start" style="height: 5%; margin: 0 40px;">
+
+        </Stack>
+        
+        <Stack Horizontal="true" HorizontalAlign="Alignment.End" style="height: 5%; margin: 0 40px;">
+            <TextField Placeholder="Please enter text here." ForID="StandardTF" style="margin-right: 5px; width:260px;"/>
+            <PrimaryButton Text="Primary" />
+        </Stack>
     </Stack>
+    
 
     <div style="height: 95%; overflow-y: auto; padding: 0 40px;">
         <DetailsList ItemsSource="CodeSnippets"

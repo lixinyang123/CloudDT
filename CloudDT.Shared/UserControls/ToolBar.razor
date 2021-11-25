@@ -5,7 +5,7 @@
 <div class="btn-group" style="width: 200px; float: right;">
     <button class="btn btn-sm btn-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown">@CurrentLanguage</button>
     <ul class="dropdown-menu">
-        @foreach (var item in DropdownItems)
+        @foreach (var item in DropdownItems!)
         {
             <li><a class="dropdown-item" @onclick=@(() => CurrentLanguage = item.Key) >@item.Key</a></li>
         }
