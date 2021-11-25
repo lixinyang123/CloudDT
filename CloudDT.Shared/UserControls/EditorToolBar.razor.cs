@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CloudDT.Shared.UserControls
 {
-    public partial class ToolBarBase : ComponentBase
+    public partial class EditorToolBarBase : ComponentBase
     {
         [Inject]
         ILocalStorageService? LocalStorage { get; set; }
