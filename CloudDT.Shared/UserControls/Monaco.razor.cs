@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
-namespace CloudDT.UserControls
+namespace CloudDT.Shared.UserControls
 {
-    public partial class Monaco : ComponentBase
+    public partial class MonacoBase : ComponentBase
     {
         [Inject]
         private IJSRuntime? JSRuntime { get; set; }

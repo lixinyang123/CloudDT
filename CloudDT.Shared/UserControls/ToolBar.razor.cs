@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CloudDT.UserControls
+namespace CloudDT.Shared.UserControls
 {
-    public partial class ToolBar : ComponentBase
+    public partial class ToolBarBase : ComponentBase
     {
         [Inject]
         ILocalStorageService? LocalStorage { get; set; }
@@ -162,7 +162,7 @@ namespace CloudDT.UserControls
             ShowDialog = false;
         }
 
-        private void OpenFind(object? args) => JSRuntime?.InvokeVoidAsync("openFind").AsTask().Wait();
+        private void OpenFind(object? args) => JSRuntime?.InvokeVoidAsync("openFind").AsTask();
 
         public string GetCode() => ((IJSInProcessRuntime)JSRuntime!).Invoke<string>("getCode");
     }

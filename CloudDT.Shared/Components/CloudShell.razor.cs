@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace CloudDT.Components
+namespace CloudDT.Shared.Components
 {
-    public partial class CloudShell : ComponentBase { }
+    public partial class CloudShellBase : ComponentBase { }
 }

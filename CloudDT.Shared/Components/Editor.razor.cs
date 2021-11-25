@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace CloudDT.Components
+namespace CloudDT.Shared.Components
 {
-    public class Editor : ComponentBase { }
+    public class EditorBase : ComponentBase { }
 }

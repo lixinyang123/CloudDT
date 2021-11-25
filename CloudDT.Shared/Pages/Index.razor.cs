@@ -1,18 +1,18 @@
 using Microsoft.AspNetCore.Components;
 
-namespace CloudDT.Pages
+namespace CloudDT.Shared.Pages
 {
-    public class Index : ComponentBase
+    public partial class IndexBase : ComponentBase
     {
         public string? Username { get; set; }
 
         public string? Password { get; set; }
 
-        [Inject] NavigationManager? navigationManager { get; set; }
+        [Inject] NavigationManager? NavigationManager { get; set; }
 
         public void Login()
         {
-            navigationManager?.NavigateTo("Overview");
+            NavigationManager?.NavigateTo("Overview");
         }
     }
 }

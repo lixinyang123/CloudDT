@@ -1,6 +1,6 @@
 ﻿@using BlazorFluentUI.Lists
 @using Models
-@inherits CloudDT.Components.Borad
+@inherits CloudDT.Shared.Components.BoradBase
 
 <div style="height: 100%;">
 
@@ -14,7 +14,6 @@
             <PrimaryButton Text="Primary" />
         </Stack>
     </Stack>
-    
 
     <div style="height: 95%; overflow-y: auto; padding: 0 40px;">
         <DetailsList ItemsSource="CodeSnippets"

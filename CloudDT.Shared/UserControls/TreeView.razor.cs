@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CloudDT.UserControls
+namespace CloudDT.Shared.UserControls
 {
-    public partial class TreeView : ComponentBase
+    public partial class TreeViewBase : ComponentBase
     {
         [Inject]
         ILocalStorageService? LocalStorage { get; set; }

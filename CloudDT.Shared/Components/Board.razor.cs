@@ -4,9 +4,9 @@ using CloudDT.Models;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 
-namespace CloudDT.Components
+namespace CloudDT.Shared.Components
 {
-    public class Borad : ComponentBase
+    public partial class BoradBase : ComponentBase
     {
         [Inject]
         ILocalStorageService? LocalStorage { get; set; }

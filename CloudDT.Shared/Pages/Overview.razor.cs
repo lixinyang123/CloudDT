@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components;
 
-namespace CloudDT.Pages
+namespace CloudDT.Shared.Pages
 {
-    public class Overview : ComponentBase
+    public partial class OverviewBase : ComponentBase
     {
         public string SelectedKey { get; set; } = "Board";
     }

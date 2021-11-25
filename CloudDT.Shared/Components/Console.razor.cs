@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace CloudDT.Components
+namespace CloudDT.Shared.Components
 {
-    public partial class Console : ComponentBase { }
+    public partial class ConsoleBase : ComponentBase { }
 }
