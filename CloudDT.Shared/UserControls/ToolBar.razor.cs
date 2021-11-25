@@ -150,7 +150,7 @@ namespace CloudDT.UserControls
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = Name,
-                Language = CurrentLanguage,
+                Language = currentLanguage ?? "PlainText",
                 Description = Description
             };
 

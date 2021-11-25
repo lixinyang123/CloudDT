@@ -1,4 +1,6 @@
+using Blazored.LocalStorage;
 using BlazorFluentUI.Routing;
+using CloudDT.Models;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,18 +9,27 @@ namespace CloudDT.UserControls
 {
     public partial class TreeView : ComponentBase
     {
-        public List<NavBarItem>? items;
+        [Inject]
+        ILocalStorageService? LocalStorage { get; set; }
 
-        protected override Task OnInitializedAsync()
+        public List<NavBarItem> CodeSnippets { get; set; } = new();
+
+        protected override async Task OnInitializedAsync()
         {
-            items = new List<NavBarItem> {
-                new NavBarItem() {Text= "First", Url="#test1", NavMatchType= NavMatchType.AnchorOnly, Id="test3", IconName="Remove", Key="3"},
-                new NavBarItem() {Text= "Second", Url="#test2", NavMatchType= NavMatchType.AnchorOnly, Id="test3", IconName="Remove", Key="3"},
-                new NavBarItem() {Text= "Third", Url="#test3", NavMatchType= NavMatchType.AnchorOnly, Id="test3", IconName="Remove", Key="3"},
-                new NavBarItem() {Text= "Fourth", Url="#test4", NavMatchType= NavMatchType.AnchorOnly, Id="test4", IconName="Save", Key="4"}
-            };
+            (await LocalStorage!.GetItemAsync<List<CodeSnippet>>("CodeSnippets")).ForEach(i =>
+            {
+                CodeSnippets.Add(new()
+                {
+                    Text = i.Name,
+                    Url = "#",
+                    NavMatchType = NavMatchType.AnchorOnly,
+                    Id = i.Id,
+                    IconName = "Remove",
+                    Key = "3"
+                });
+            });
 
-            return base.OnInitializedAsync();
+            await base.OnInitializedAsync();
         }
     }
 }
