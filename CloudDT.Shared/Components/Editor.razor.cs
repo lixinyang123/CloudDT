@@ -150,7 +150,7 @@ namespace CloudDT.Shared.Components
                     Id = i.Id,
                     IconName = "code",
                     Key = i.Id,
-                    Url = $"Overview#{i.Id}",
+                    Url = $"/Editor/#{i.Id}",
                     Command = new RelayCommand(_ => CurrentSnippet = i)
                 });
             });
@@ -200,7 +200,7 @@ namespace CloudDT.Shared.Components
                 Id = snippet.Id,
                 IconName = "code",
                 Key = snippet.Id,
-                Url = $"Overview#{snippet.Id}",
+                Url = $"/Editor/#{snippet.Id}",
                 Command = new RelayCommand(_ => CurrentSnippet = snippet)
             });
 

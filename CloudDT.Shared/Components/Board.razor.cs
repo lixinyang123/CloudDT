@@ -13,6 +13,9 @@ namespace CloudDT.Shared.Components
         [Inject]
         ILocalStorageService? LocalStorage { get; set; }
 
+        [Inject]
+        NavigationManager? NavigationManager { get; set; }
+
         public Selection<CodeSnippet> Selection { get; set; } = new();
 
         public List<IDetailsRowColumn<CodeSnippet>> Columns { get; set; } = new();
@@ -56,7 +59,8 @@ namespace CloudDT.Shared.Components
                 {
                     Text= "Open",
                     IconName="code",
-                    Key="2"
+                    Key="2",
+                    Command = new RelayCommand(Open)
                 },
                 new CommandBarItem()
                 {
@@ -91,6 +95,11 @@ namespace CloudDT.Shared.Components
             CodeSnippets.Clear();
             (await LocalStorage!.GetItemAsync<List<CodeSnippet>>("CodeSnippets")).ForEach(i => CodeSnippets.Add(i));
             StateHasChanged();
+        }
+
+        private void Open(object? _)
+        {
+            NavigationManager?.NavigateTo($"/Overview#{CurrentSnippet.Id}", false);
         }
 
         private async void Delete(object? _)
