@@ -20,6 +20,9 @@ namespace CloudDT.Shared.Pages
         [Inject]
         IJSRuntime? JSRuntime { get; set; }
 
+        [Inject]
+        NavigationManager? NavigationManager { get; set; }
+
         private bool showDialog = false;
 
         public bool ShowDialog
@@ -155,8 +158,14 @@ namespace CloudDT.Shared.Pages
                 });
             });
 
-            InitEditor();
             await base.OnInitializedAsync();
+        }
+
+        protected override Task OnAfterRenderAsync(bool firstRender)
+        {
+            var snipptId = NavigationManager!.Uri.Split("#").Last();
+            LoadCodeSnippt(snipptId);
+            return base.OnAfterRenderAsync(firstRender);
         }
 
         private void InitEditor(string? lang = "", string? code = "") => JSRuntime?.InvokeVoidAsync("initEditor", lang, code).AsTask();
