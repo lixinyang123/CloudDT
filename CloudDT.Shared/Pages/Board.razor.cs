@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CloudDT.Shared.Components
+namespace CloudDT.Shared.Pages
 {
     public partial class BoradBase : ComponentBase
     {
@@ -99,7 +99,7 @@ namespace CloudDT.Shared.Components
 
         private void Open(object? _)
         {
-            NavigationManager?.NavigateTo($"/Overview#{CurrentSnippet.Id}", false);
+            NavigationManager?.NavigateTo($"/Editor#{CurrentSnippet.Id}", false);
         }
 
         private async void Delete(object? _)
