@@ -11,6 +11,6 @@ public static class Configurator
         Directory.CreateDirectory($"{Configurator.EnvPath}/Dotnet");
         Directory.CreateDirectory($"{Configurator.EnvPath}/Python");
 
-        File.Copy("Env/demo.csproj.templete", $"{Configurator.EnvPath}/Dotnet/demo.csproj", true);
+        // File.Copy("Env/demo.csproj.templete", $"{Configurator.EnvPath}/Dotnet/demo.csproj", true);
     }
 }
