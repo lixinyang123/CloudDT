@@ -2,6 +2,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 7681
+EXPOSE 8435
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
@@ -58,4 +59,6 @@ RUN dotnet publish -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CloudDT.ContainerAPI.dll","urls=http://*"]
+
+WORKDIR /root
+ENTRYPOINT ["dotnet", "/app/CloudDT.ContainerAPI.dll","urls=http://*"]
