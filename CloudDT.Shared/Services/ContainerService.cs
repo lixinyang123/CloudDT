@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CloudDT.Shared.Services
@@ -11,7 +12,7 @@ namespace CloudDT.Shared.Services
 
         private readonly HttpClient httpClient = new();
 
-        private string containerId = string.Empty;
+        public string ContainerId { get; set; } = string.Empty;
 
         public List<int> Ports { get; } = new();
 
@@ -20,12 +21,19 @@ namespace CloudDT.Shared.Services
         /// </summary>
         public async Task<bool> Create()
         {
-            if (!string.IsNullOrEmpty(containerId))
+            if (!string.IsNullOrEmpty(ContainerId))
                 return false;
 
             HttpResponseMessage responseMessage = await httpClient!.GetAsync($"{api}/create?clouddt");
-            containerId = await responseMessage.Content.ReadAsStringAsync();
-            return responseMessage.StatusCode == HttpStatusCode.OK;
+            bool flag = responseMessage.StatusCode == HttpStatusCode.OK;
+
+            if (flag)
+            {
+                ContainerId = await responseMessage.Content.ReadAsStringAsync();
+                AutoDelay();
+            }
+
+            return flag;
         }
 
         /// <summary>
@@ -33,15 +41,14 @@ namespace CloudDT.Shared.Services
         /// </summary>
         public async Task<bool> Kill()
         {
-            if (string.IsNullOrEmpty(containerId))
+            if (string.IsNullOrEmpty(ContainerId))
                 return false;
 
-            HttpResponseMessage responseMessage = await httpClient!.GetAsync($"{api}/kill?{containerId}");
-            containerId = await responseMessage.Content.ReadAsStringAsync();
+            HttpResponseMessage responseMessage = await httpClient!.GetAsync($"{api}/kill?{ContainerId}");
             bool flag = responseMessage.StatusCode == HttpStatusCode.OK;
 
             if (flag)
-                containerId = string.Empty;
+                ContainerId = string.Empty;
 
             return flag;
         }
@@ -52,16 +59,35 @@ namespace CloudDT.Shared.Services
         /// <param name="port">端口号</param>
         public async Task<bool> ForwardPort(int port)
         {
-            if (string.IsNullOrEmpty(containerId))
+            if (string.IsNullOrEmpty(ContainerId))
                 return false;
 
-            HttpResponseMessage responseMessage = await httpClient!.GetAsync($"{api}/forward?id=${containerId}&port=${port}");
+            HttpResponseMessage responseMessage = await httpClient!.GetAsync($"{api}/forward?id=${ContainerId}&port=${port}");
             bool flag = responseMessage.StatusCode == HttpStatusCode.OK;
 
             if (flag)
                 Ports.Add(port);
 
             return flag;
+        }
+
+        private void AutoDelay()
+        {
+            //_ = Task.Run(async () =>
+            //{
+            //    while(true)
+            //    {
+            //        Thread.Sleep(1000 * 60);
+
+            //        if (string.IsNullOrEmpty(ContainerId))
+            //            continue;
+
+            //        HttpResponseMessage responseMessage = await httpClient!.GetAsync($"{api}/delay?{ContainerId}");
+
+            //        if (responseMessage.StatusCode == HttpStatusCode.OK)
+            //            System.Console.WriteLine("delay successful");
+            //    }
+            //});
         }
 
     }

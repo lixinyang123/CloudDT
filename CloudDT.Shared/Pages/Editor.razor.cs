@@ -89,6 +89,7 @@ namespace CloudDT.Shared.Pages
             set
             {
                 currentSnippet = value;
+                CurrentLanguage = currentSnippet!.Language!;
                 LoadCodeSnippt(currentSnippet?.Id!);
                 StateHasChanged();
             }
@@ -158,14 +159,10 @@ namespace CloudDT.Shared.Pages
                 });
             });
 
-            await base.OnInitializedAsync();
-        }
-
-        protected override Task OnAfterRenderAsync(bool firstRender)
-        {
             var snipptId = NavigationManager!.Uri.Split("#").Last();
             LoadCodeSnippt(snipptId);
-            return base.OnAfterRenderAsync(firstRender);
+
+            await base.OnInitializedAsync();
         }
 
         private void InitEditor(string? lang = "", string? code = "") => JSRuntime?.InvokeVoidAsync("initEditor", lang, code).AsTask();

@@ -1,6 +1,7 @@
 ﻿using BlazorFluentUI;
 using BlazorFluentUI.Routing;
 using BlazorFluentUI.Themes.Default;
+using CloudDT.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,6 +12,9 @@ namespace CloudDT.Shared.Shared
     {
         [Inject]
         private ThemeProvider? ThemeProvider { get; set; }
+
+        [Inject]
+        private ContainerService? ContainerService { get; set; }
 
         public List<NavBarItem>? NavBarItems { get; set; }
 
@@ -55,6 +59,12 @@ namespace CloudDT.Shared.Shared
             };
 
             return base.OnInitializedAsync();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            bool flag = await ContainerService!.Create();
+            await base.OnAfterRenderAsync(firstRender);
         }
     }
 }
