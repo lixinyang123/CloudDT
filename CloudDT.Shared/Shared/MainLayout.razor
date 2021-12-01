@@ -1,18 +1,7 @@
-﻿@using BlazorFluentUI.Themes.Default
-@inherits LayoutComponentBase
-
-@inject ThemeProvider ThemeProvider;
+﻿@inherits CloudDT.Shared.Shared.MainLayoutBase
 
 <div class="page animate__animated animate__fadeIn">
     <main>
         @Body
     </main>
 </div>
-
-@code {
-    protected override Task OnInitializedAsync()
-    {
-        ThemeProvider?.UpdateTheme(new DefaultPaletteDark());
-        return base.OnInitializedAsync();
-    }
-}

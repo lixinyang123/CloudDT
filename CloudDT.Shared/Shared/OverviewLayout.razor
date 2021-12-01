@@ -1,7 +1,4 @@
-﻿@using BlazorFluentUI.Themes.Default
-@inherits LayoutComponentBase
-
-@inject ThemeProvider ThemeProvider;
+﻿@inherits CloudDT.Shared.Shared.OverviewLayoutBase
 
 <div class="page animate__animated animate__fadeIn">
     <main>
@@ -9,50 +6,3 @@
         <article>@Body</article>
     </main>
 </div>
-
-@code {
-    public List<NavBarItem>? NavBarItems { get; set; }
-
-    protected override Task OnInitializedAsync()
-    {
-        ThemeProvider?.UpdateTheme(new DefaultPaletteDark());
-
-        NavBarItems = new()
-        {
-            new()
-            {
-                Text = "Board",
-                NavMatchType = NavMatchType.AnchorOnly,
-                Id = "Board",
-                Key = "Board",
-                Url = "/Board"
-            },
-            new()
-            {
-                Text = "Editor",
-                NavMatchType = NavMatchType.AnchorOnly,
-                Id = "Editor",
-                Key = "Editor",
-                Url = "/Editor"
-            },
-            new()
-            {
-                Text = "Console",
-                NavMatchType = NavMatchType.AnchorOnly,
-                Id = "Console",
-                Key = "Console",
-                Url = "/Console"
-            },
-            new()
-            {
-                Text = "CloudShell",
-                NavMatchType = NavMatchType.AnchorOnly,
-                Id = "CloudShell",
-                Key = "CloudShell",
-                Url = "/CloudShell"
-            }
-        };
-
-        return base.OnInitializedAsync();
-    }
-}
