@@ -1,7 +1,7 @@
 using Blazored.LocalStorage;
 using BlazorFluentUI;
 using BlazorFluentUI.Routing;
-using CloudDT.Models;
+using CloudDT.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;

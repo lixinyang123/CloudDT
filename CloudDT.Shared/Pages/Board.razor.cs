@@ -1,6 +1,6 @@
 using Blazored.LocalStorage;
 using BlazorFluentUI;
-using CloudDT.Models;
+using CloudDT.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;

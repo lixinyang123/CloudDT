@@ -1,4 +1,4 @@
-namespace CloudDT.Models
+namespace CloudDT.Shared.Models
 {
     public class CodeSnippet
     {
