@@ -15,6 +15,8 @@ namespace CloudDT.Shared.Services
 
         public List<int> Ports { get; } = new();
 
+        public string TTYHref { get => $"{api}/{ContainerId}"; }
+
         /// <summary>
         /// 创建环境
         /// </summary>
@@ -58,7 +60,7 @@ namespace CloudDT.Shared.Services
             if (string.IsNullOrEmpty(ContainerId))
                 return false;
 
-            HttpResponseMessage responseMessage = await httpClient!.GetAsync($"{api}/forward?id=${ContainerId}&port=${port}");
+            HttpResponseMessage responseMessage = await httpClient!.GetAsync($"{api}/forward?id={ContainerId}&port={port}");
             bool flag = responseMessage.StatusCode == HttpStatusCode.OK;
 
             if (flag)

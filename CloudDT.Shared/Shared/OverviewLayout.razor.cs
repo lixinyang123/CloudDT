@@ -46,11 +46,11 @@ namespace CloudDT.Shared.Shared
                 },
                 new()
                 {
-                    Text = "Console",
+                    Text = "Shell",
                     NavMatchType = NavMatchType.AnchorOnly,
-                    Id = "Console",
-                    Key = "Console",
-                    Url = "/Console"
+                    Id = "Shell",
+                    Key = "Shell",
+                    Url = "/Shell"
                 },
                 new()
                 {
@@ -64,7 +64,11 @@ namespace CloudDT.Shared.Shared
 
             bool flag = await ContainerService!.Create();
             if (flag)
+            {
                 await JSRuntime!.InvokeVoidAsync("dalayContainer", ContainerService?.ContainerId);
+                // await ContainerService!.ForwardPort(80);
+                // await ContainerService!.ForwardPort(8435);
+            }
 
             await base.OnInitializedAsync();
         }
