@@ -13,7 +13,7 @@ namespace CloudDT.Shared.Services
 
         public string ContainerId { get; set; } = string.Empty;
 
-        public List<int> Ports { get; } = new();
+        public Dictionary<int, string> Ports { get; } = new();
 
         public string TTYHref { get => $"{api}/{ContainerId}"; }
 
@@ -64,9 +64,17 @@ namespace CloudDT.Shared.Services
             bool flag = responseMessage.StatusCode == HttpStatusCode.OK;
 
             if (flag)
-                Ports.Add(port);
+                Ports.Add(port, $"{api}/forward/{ContainerId}/{port}");
 
             return flag;
+        }
+
+        public async void RunCodeSnippet(string lang, string code)
+        {
+            if (string.IsNullOrEmpty(ContainerId))
+                return;
+
+            await httpClient.PostAsync(Ports[80], new StringContent(code));
         }
     }
 }

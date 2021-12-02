@@ -66,8 +66,8 @@ namespace CloudDT.Shared.Shared
             if (flag)
             {
                 await JSRuntime!.InvokeVoidAsync("dalayContainer", ContainerService?.ContainerId);
-                // await ContainerService!.ForwardPort(80);
-                // await ContainerService!.ForwardPort(8435);
+                await ContainerService!.ForwardPort(80);
+                await ContainerService!.ForwardPort(8435);
             }
 
             await base.OnInitializedAsync();
