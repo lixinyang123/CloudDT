@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace CloudDT.Shared.Services
@@ -28,10 +27,7 @@ namespace CloudDT.Shared.Services
             bool flag = responseMessage.StatusCode == HttpStatusCode.OK;
 
             if (flag)
-            {
                 ContainerId = await responseMessage.Content.ReadAsStringAsync();
-                AutoDelay();
-            }
 
             return flag;
         }
@@ -70,25 +66,5 @@ namespace CloudDT.Shared.Services
 
             return flag;
         }
-
-        private void AutoDelay()
-        {
-            //_ = Task.Run(async () =>
-            //{
-            //    while(true)
-            //    {
-            //        Thread.Sleep(1000 * 60);
-
-            //        if (string.IsNullOrEmpty(ContainerId))
-            //            continue;
-
-            //        HttpResponseMessage responseMessage = await httpClient!.GetAsync($"{api}/delay?{ContainerId}");
-
-            //        if (responseMessage.StatusCode == HttpStatusCode.OK)
-            //            System.Console.WriteLine("delay successful");
-            //    }
-            //});
-        }
-
     }
 }

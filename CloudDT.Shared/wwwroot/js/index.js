@@ -42,7 +42,7 @@
     }
 }
 
-var editor;
+var editor, worker;
 
 function initEditor(lang, code) {
     document.querySelector("#editor-container").innerHTML = `<div id="editor"></div>`;
@@ -65,4 +65,9 @@ function openFind() {
 
 function getCode() {
     return editor.getValue();
+}
+
+function dalayContainer(id) {
+    worker = new Worker("./js/worker.js");
+    worker.postMessage(id);
 }

@@ -3,6 +3,7 @@ using BlazorFluentUI.Routing;
 using BlazorFluentUI.Themes.Default;
 using CloudDT.Shared.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,11 +15,14 @@ namespace CloudDT.Shared.Shared
         private ThemeProvider? ThemeProvider { get; set; }
 
         [Inject]
+        private IJSRuntime? JSRuntime { get; set; }
+
+        [Inject]
         private ContainerService? ContainerService { get; set; }
 
         public List<NavBarItem>? NavBarItems { get; set; }
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             ThemeProvider?.UpdateTheme(new DefaultPaletteDark());
 
@@ -58,13 +62,11 @@ namespace CloudDT.Shared.Shared
                 }
             };
 
-            return base.OnInitializedAsync();
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
             bool flag = await ContainerService!.Create();
-            await base.OnAfterRenderAsync(firstRender);
+            if (flag)
+                await JSRuntime!.InvokeVoidAsync("dalayContainer", ContainerService?.ContainerId);
+
+            await base.OnInitializedAsync();
         }
     }
 }
