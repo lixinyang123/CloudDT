@@ -10,7 +10,6 @@ builder.Services.AddSingleton<NodeService>();
 builder.Services.AddSingleton<CSharpService>();
 builder.Services.AddSingleton<PythonService>();
 
-builder.Services.AddCors();
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -20,7 +19,6 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseCors();
 app.MapDefaultControllerRoute();
 
 app.Run();
