@@ -13,6 +13,7 @@ namespace CloudDT.ContainerAPI.Controllers
         }
 
         [HttpPost]
+        [HttpOptions]
         public IActionResult Index(string code)
         {
             nodeService.Save(code).Run();
