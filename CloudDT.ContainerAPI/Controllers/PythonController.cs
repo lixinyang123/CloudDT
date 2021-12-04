@@ -16,6 +16,9 @@ namespace CloudDT.ContainerAPI.Controllers
         [HttpOptions]
         public IActionResult Index(string code)
         {
+            if(Request.Method == "Options")
+                return Ok();
+            
             pythonService.Save(code).Run();
             return Ok();
         }
