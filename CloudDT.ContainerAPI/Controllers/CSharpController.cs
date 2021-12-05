@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CloudDT.ContainerAPI.Controllers
 {
-    public class DotnetController : ControllerBase
+    public class CSharpController : ControllerBase
     {
-        private readonly CSharpService dotnetService;
+        private readonly CSharpService csharpService;
 
-        public DotnetController(CSharpService dotnetService)
+        public CSharpController(CSharpService csharpService)
         {
-            this.dotnetService = dotnetService;
+            this.csharpService = csharpService;
         }
 
         public IActionResult Index(string code)
@@ -17,7 +17,7 @@ namespace CloudDT.ContainerAPI.Controllers
             if(Request.Method == "Options")
                 return Ok();
 
-            dotnetService.Save(code).Run();
+            csharpService.Save(code).Run();
             return Ok();
         }
     }
