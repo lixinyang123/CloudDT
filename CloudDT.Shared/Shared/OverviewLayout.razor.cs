@@ -54,6 +54,14 @@ namespace CloudDT.Shared.Shared
                 },
                 new()
                 {
+                    Text = "Ports",
+                    NavMatchType = NavMatchType.AnchorOnly,
+                    Id = "Ports",
+                    Key = "Ports",
+                    Url = "/Ports"
+                },
+                new()
+                {
                     Text = "CloudShell",
                     NavMatchType = NavMatchType.AnchorOnly,
                     Id = "CloudShell",
@@ -62,8 +70,7 @@ namespace CloudDT.Shared.Shared
                 }
             };
 
-            bool flag = await ContainerService!.Create();
-            if (flag)
+            if (await ContainerService!.Create())
             {
                 await JSRuntime!.InvokeVoidAsync("dalayContainer", ContainerService?.ContainerId);
                 await ContainerService!.ForwardPort(80);
