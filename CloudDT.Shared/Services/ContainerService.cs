@@ -33,6 +33,7 @@ namespace CloudDT.Shared.Services
             if (flag)
             {
                 ContainerId = await responseMessage.Content.ReadAsStringAsync();
+                Ports.Add(7681, $"{api}/forward/{ContainerId}/{7681}");
                 Console.WriteLine(ContainerId);
             }
 
