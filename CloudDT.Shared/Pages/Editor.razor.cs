@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using BlazorFluentUI;
 using BlazorFluentUI.Routing;
 using CloudDT.Shared.Models;
+using CloudDT.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -22,6 +23,9 @@ namespace CloudDT.Shared.Pages
 
         [Inject]
         NavigationManager? NavigationManager { get; set; }
+
+        [Inject]
+        private ContainerService? ContainerService { get; set; }
 
         private bool showDialog = false;
 
@@ -67,7 +71,7 @@ namespace CloudDT.Shared.Pages
 
         public string CurrentLanguage
         {
-            get => currentLanguage ?? "Language";
+            get => currentLanguage ?? "PlainText";
             set
             {
                 currentLanguage = value;
@@ -94,6 +98,8 @@ namespace CloudDT.Shared.Pages
                 StateHasChanged();
             }
         }
+
+        public string ResultFrame { get; set; } = string.Empty;
 
         protected override async Task OnInitializedAsync()
         {
@@ -174,13 +180,27 @@ namespace CloudDT.Shared.Pages
             InitEditor(lang, code);
         }
 
-        public void Run(object? _)
+        public async void Run(object? _)
         {
-            ShowOffcanvas = true;
+            if (CurrentLanguage == "PlainText")
+                return;
+
+            await JSRuntime!.InvokeAsync<string>(
+                "runCodeSnippets",
+                ContainerService?.ContainerId,
+                CurrentLanguage, GetCode()
+            ).AsTask();
+
+            if (true)
+            {
+                ResultFrame = $"{ContainerService!.Ports[8435]}/";
+                ShowOffcanvas = true;
+            }
         }
 
         public void Stop(object? _)
         {
+            ResultFrame = "";
             ShowOffcanvas = false;
         }
 

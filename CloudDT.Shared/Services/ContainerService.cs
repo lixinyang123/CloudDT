@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace CloudDT.Shared.Services
@@ -15,7 +17,7 @@ namespace CloudDT.Shared.Services
 
         public Dictionary<int, string> Ports { get; } = new();
 
-        public string TTYHref { get => $"{api}/{ContainerId}"; }
+        public string TTYHref { get => $"{api}/{ContainerId}/"; }
 
         /// <summary>
         /// 创建环境
@@ -29,7 +31,10 @@ namespace CloudDT.Shared.Services
             bool flag = responseMessage.StatusCode == HttpStatusCode.OK;
 
             if (flag)
+            {
                 ContainerId = await responseMessage.Content.ReadAsStringAsync();
+                Console.WriteLine(ContainerId);
+            }
 
             return flag;
         }
@@ -63,18 +68,10 @@ namespace CloudDT.Shared.Services
             HttpResponseMessage responseMessage = await httpClient!.GetAsync($"{api}/forward?id={ContainerId}&port={port}");
             bool flag = responseMessage.StatusCode == HttpStatusCode.OK;
 
-            if (flag)
+            if (flag && !Ports.ContainsKey(port))
                 Ports.Add(port, $"{api}/forward/{ContainerId}/{port}");
 
             return flag;
-        }
-
-        public async void RunCodeSnippet(string lang, string code)
-        {
-            if (string.IsNullOrEmpty(ContainerId))
-                return;
-
-            await httpClient.PostAsync(Ports[80], new StringContent(code));
         }
     }
 }

@@ -40,8 +40,12 @@ a, .btn-link {
 
 .offcanvas .btn-close {
     position: absolute;
-    right: 7px;
+    right: 25px;
     top: 10px;
+}
+
+.offcanvas-body {
+    overflow-y: hidden;
 }
 
 .modal-footer {
@@ -69,6 +73,10 @@ a, .btn-link {
 
 .dropdown-menu li {
     cursor: pointer;
+}
+
+article {
+    overflow-y: hidden;
 }
 
 #app {
