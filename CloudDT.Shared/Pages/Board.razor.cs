@@ -84,7 +84,7 @@ namespace CloudDT.Shared.Pages
             Columns.Add(new DetailsRowColumn<CodeSnippet>("Name", x => x.Name!) { MaxWidth = 200, IsResizable = true });
             Columns.Add(new DetailsRowColumn<CodeSnippet>("Description", x => x.Description!) { IsResizable = true });
 
-            (await LocalStorage!.GetItemAsync<List<CodeSnippet>>("CodeSnippets")).ForEach(i => CodeSnippets.Add(i));
+            (await LocalStorage!.GetItemAsync<List<CodeSnippet>>("CodeSnippets"))?.ForEach(i => CodeSnippets.Add(i));
             CodeSnippets.Reverse();
 
             await base.OnInitializedAsync();

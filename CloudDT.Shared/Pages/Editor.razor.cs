@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CloudDT.Shared.Pages
 {
-    public class EditorBase : ComponentBase 
+    public class EditorBase : ComponentBase
     {
 
         [Inject]
@@ -61,40 +61,30 @@ namespace CloudDT.Shared.Pages
 
         public List<CommandBarItem>? CommandBarItems { get; set; }
 
-        public Dictionary<string, string>? DropdownItems { get; set; }
+        public Dictionary<string, string> DropdownItems { get; set; } = new Dictionary<string, string>
+        {
+            { "PlainText", string.Empty },
+            { "Node", "javascript" },
+            { "Python", "python" },
+            { "CSharp", "csharp" }
+        };
 
         public List<NavBarItem> NavBarItems { get; set; } = new();
 
         public List<CodeSnippet>? CodeSnippets { get; set; }
 
-        private string? currentLanguage;
-
-        public string CurrentLanguage
+        private CodeSnippet currentSnippet = new()
         {
-            get => currentLanguage ?? "PlainText";
-            set
-            {
-                currentLanguage = value;
-                InitEditor(DropdownItems?.SingleOrDefault(i => i.Key == value).Value);
+            Language = "PlainText"
+        };
 
-                StateHasChanged();
-            }
-        }
-
-        public string? Name { get; set; }
-
-        public string? Description { get; set; }
-
-        private CodeSnippet? currentSnippet;
-
-        public CodeSnippet? CurrentSnippet
+        public CodeSnippet CurrentSnippet
         {
             get => currentSnippet;
             set
             {
                 currentSnippet = value;
-                CurrentLanguage = currentSnippet!.Language!;
-                LoadCodeSnippt(currentSnippet?.Id!);
+                LoadCodeSnippt(currentSnippet.Id);
                 StateHasChanged();
             }
         }
@@ -124,7 +114,7 @@ namespace CloudDT.Shared.Pages
                     Text= "Save",
                     IconName="save",
                     Key="4",
-                    Command = new RelayCommand(_ => ShowDialog = true)
+                    Command = new RelayCommand(Save)
                 },
                 new CommandBarItem()
                 {
@@ -139,13 +129,6 @@ namespace CloudDT.Shared.Pages
                     IconName="share",
                     Key="5"
                 }
-            };
-
-            DropdownItems = new Dictionary<string, string>
-            {
-                { "Node", "javascript" },
-                { "Python", "python" },
-                { "CSharp", "csharp" }
             };
 
             CodeSnippets = await LocalStorage!.GetItemAsync<List<CodeSnippet>>("CodeSnippets") ?? new List<CodeSnippet>();
@@ -166,29 +149,36 @@ namespace CloudDT.Shared.Pages
             });
 
             var snipptId = NavigationManager!.Uri.Split("#").Last();
-            LoadCodeSnippt(snipptId);
+            CurrentSnippet = CodeSnippets?.FirstOrDefault(i => i.Id == snipptId) ?? CurrentSnippet;
 
             await base.OnInitializedAsync();
         }
 
         private void InitEditor(string? lang = "", string? code = "") => JSRuntime?.InvokeVoidAsync("initEditor", lang, code).AsTask();
 
-        private async void LoadCodeSnippt(string id)
+        private async void LoadCodeSnippt(string? id)
         {
-            string lang = CodeSnippets?.FirstOrDefault(i => i.Id == id)?.Language ?? string.Empty;
+            string lang = DropdownItems[CurrentSnippet.Language!];
             string code = await LocalStorage!.GetItemAsync<string>($"Snippet-{id}");
             InitEditor(lang, code);
         }
 
+        public void ChangeEditorLang(string lang)
+        {
+            CurrentSnippet.Language = lang;
+            InitEditor(DropdownItems[lang], GetCode());
+        }
+
         public async void Run(object? _)
         {
-            if (CurrentLanguage == "PlainText")
+            if (CurrentSnippet.Language == "PlainText")
                 return;
 
             await JSRuntime!.InvokeAsync<string>(
                 "runCodeSnippets",
                 ContainerService?.ContainerId,
-                CurrentLanguage, GetCode()
+                CurrentSnippet.Language,
+                GetCode()
             ).AsTask();
 
             if (true)
@@ -200,21 +190,32 @@ namespace CloudDT.Shared.Pages
 
         public void Stop(object? _)
         {
-            ResultFrame = "";
+            ResultFrame = string.Empty;
             ShowOffcanvas = false;
         }
 
-        public async Task Save()
+        private async void Save(object? _)
         {
-            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Description))
+            if (CurrentSnippet.Id is not null)
+            {
+                await SaveCurrentSnippets();
+                return;
+            }
+
+            ShowDialog = true;
+        }
+
+        public async Task SaveSnippets()
+        {
+            if (string.IsNullOrEmpty(CurrentSnippet.Name) || string.IsNullOrEmpty(CurrentSnippet.Description))
                 return;
 
             CodeSnippet snippet = new()
             {
                 Id = Guid.NewGuid().ToString(),
-                Name = Name,
-                Language = currentLanguage ?? "PlainText",
-                Description = Description
+                Name = CurrentSnippet.Name,
+                Language = CurrentSnippet.Language,
+                Description = CurrentSnippet.Description
             };
 
             CodeSnippets?.Add(snippet);
@@ -238,8 +239,21 @@ namespace CloudDT.Shared.Pages
             StateHasChanged();
         }
 
+        public async Task SaveCurrentSnippets()
+        {
+            await LocalStorage!.SetItemAsync("CodeSnippets", CodeSnippets);
+            await LocalStorage!.SetItemAsync($"Snippet-{CurrentSnippet.Id}", GetCode());
+        }
+
         private void OpenFind(object? _) => JSRuntime?.InvokeVoidAsync("openFind").AsTask();
 
         public string GetCode() => ((IJSInProcessRuntime)JSRuntime!).Invoke<string>("getCode");
+
+        public void NewSnippet()
+        {
+            NavigationManager?.NavigateTo("/Editor");
+            CurrentSnippet = new() { Language = "PlainText" };
+            LoadCodeSnippt(CurrentSnippet.Id);
+        }
     }
 }

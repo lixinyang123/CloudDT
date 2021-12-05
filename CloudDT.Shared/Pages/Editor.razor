@@ -4,7 +4,10 @@
 <div class="container-fluid" style="height: 100%">
     <div class="row" style="height: 100%;">
         <div class="col-2">
-            <NavBar Grow="1" Direction="LayoutDirection.Vertical" Items=@NavBarItems />
+            <Stack VerticalFill="true">
+                <DefaultButton Text="New Snippet" IconName=add_circle OnClick=NewSnippet Style="margin-bottom: 10px;" />
+                <NavBar Grow="1" Direction="LayoutDirection.Vertical" Items=@NavBarItems />
+            </Stack>
         </div>
 
         <div class="col-10" style="height: 100%">
@@ -13,11 +16,11 @@
                     <CommandBar Items=@CommandBarItems Style="float: left; width: 500px;" />
 
                     <div class="btn-group float-end" style="width: 200px;">
-                        <button class="btn btn-sm btn-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown">@CurrentLanguage</button>
+                        <button class="btn btn-sm btn-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown">@CurrentSnippet.Language</button>
                         <ul class="dropdown-menu">
                             @foreach (var item in DropdownItems!)
                             {
-                                <li><a class="dropdown-item" @onclick=@(() => CurrentLanguage = item.Key) >@item.Key</a></li>
+                                <li><a class="dropdown-item" @onclick=@(() => ChangeEditorLang(item.Key)) >@item.Key</a></li>
                             }
                         </ul>
                     </div>
@@ -43,18 +46,18 @@
             <div class="modal-body">
                 <div class="textFieldDiv">
                     <Label HtmlFor="StandardTF">Name</Label>
-                    <TextField ForID="StandardTF" @bind-Value=Name/>
+                    <TextField ForID="StandardTF" @bind-Value=CurrentSnippet.Name/>
                 </div>
 
                 <div class="textFieldDiv">
                     <Label HtmlFor="StandardTF">Description</Label>
-                    <TextField ForID="StandardTF" @bind-Value=Description/>
+                    <TextField ForID="StandardTF" @bind-Value=CurrentSnippet.Description/>
                 </div>
             </div>
 
             <div class="modal-footer">
                 <DefaultButton OnClick=@(() => ShowDialog = false) Text="Close"/>
-                <PrimaryButton Text="Save changes" OnClick=Save/>
+                <PrimaryButton Text="Save changes" OnClick=SaveSnippets/>
             </div>
         </div>
     </div>
