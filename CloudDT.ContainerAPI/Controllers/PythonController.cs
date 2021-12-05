@@ -12,8 +12,6 @@ namespace CloudDT.ContainerAPI.Controllers
             this.pythonService = pythonService;
         }
 
-        [HttpPost]
-        [HttpOptions]
         public IActionResult Index(string code)
         {
             if(Request.Method == "Options")

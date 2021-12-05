@@ -12,8 +12,6 @@ namespace CloudDT.ContainerAPI.Controllers
             this.nodeService = nodeService;
         }
 
-        [HttpPost]
-        [HttpOptions]
         public IActionResult Index(string code)
         {
             if(Request.Method == "Options")
