@@ -1,9 +1,12 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const liveServer = require("live-server");
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 function createWindow () {
+    const menu = Menu.buildFromTemplate([]);
+    Menu.setApplicationMenu(menu);
+
     const mainWindow = new BrowserWindow({
         width: 1200,
         height: 800
