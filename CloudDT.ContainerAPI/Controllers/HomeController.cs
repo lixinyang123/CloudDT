@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CloudDT.ContainerAPI.Controllers
 {
-    public class HomeContaoller : ControllerBase
+    public class HomeController : ControllerBase
     {
         public IActionResult Index()
         {

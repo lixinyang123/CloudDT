@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 4314
 EXPOSE 7681
 EXPOSE 8435
 
