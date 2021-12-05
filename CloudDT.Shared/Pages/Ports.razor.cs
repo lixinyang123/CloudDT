@@ -2,6 +2,7 @@
 using CloudDT.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CloudDT.Shared.Pages
@@ -17,33 +18,37 @@ namespace CloudDT.Shared.Pages
 
         public List<CommandBarItem>? CommandBarItems { get; set; }
 
+        public string Port { get; set; } = string.Empty;
+
         protected override async Task OnInitializedAsync()
         {
             CommandBarItems = new()
             {
                 new CommandBarItem()
                 {
-                    Text = "Refresh",
-                    IconName = "arrow_sync_circle",
-                    Key = "1"
+                    Text = "Open",
+                    IconName = "globe",
+                    Key = "2",
+                    Command = new RelayCommand(_ => System.Console.Write("open in browser"))
                 },
                 new CommandBarItem()
                 {
-                    Text = "Open",
-                    IconName = "code",
-                    Key = "2"
+                    Text = "Add",
+                    IconName = "add",
+                    Key = "5",
+                    Command = new RelayCommand(_ =>
+                    {
+                        Port = string.Empty;
+                        if (int.TryParse(Port, out int port))
+                            ContainerService?.ForwardPort(port);
+                    })
                 },
                 new CommandBarItem()
                 {
                     Text = "Delete",
                     IconName = "delete",
-                    Key = "3"
-                },
-                new CommandBarItem()
-                {
-                    Text = "Info",
-                    IconName = "error_circle",
-                    Key = "5"
+                    Key = "3",
+                    Command = new RelayCommand(DeletePort)
                 }
             };
 
@@ -52,6 +57,17 @@ namespace CloudDT.Shared.Pages
             Columns.Add(new DetailsRowColumn<KeyValuePair<int, string>>("Href", x => x.Value) { MaxWidth = 100, IsResizable = true });
 
             await base.OnInitializedAsync();
+        }
+
+        private void DeletePort(object? _)
+        {
+            Selection.SelectedItems.ToList().ForEach(i =>
+            {
+                if (i.Key == 80 || i.Key == 8435 || i.Key == 7681)
+                    return;
+
+                ContainerService?.Ports.Remove(i.Key);
+            });
         }
     }
 }
