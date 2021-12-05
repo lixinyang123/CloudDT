@@ -61,4 +61,4 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 WORKDIR /root
-ENTRYPOINT ["dotnet", "/app/CloudDT.ContainerAPI.dll","urls=http://*"]
+ENTRYPOINT ["dotnet", "/app/CloudDT.ContainerAPI.dll","urls=http://*:4314"]
