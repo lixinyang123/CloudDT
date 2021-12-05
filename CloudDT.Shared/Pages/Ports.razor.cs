@@ -18,6 +18,24 @@ namespace CloudDT.Shared.Pages
 
         public List<CommandBarItem>? CommandBarItems { get; set; }
 
+        private bool showDialog = false;
+
+        public bool ShowDialog
+        {
+            get => showDialog;
+            set
+            {
+                showDialog = value;
+                StateHasChanged();
+            }
+        }
+
+        public string ModalShow { get => showDialog ? "show" : string.Empty; }
+
+        public string ModalDisplay { get => showDialog ? "block" : "none"; }
+
+        public List<KeyValuePair<int, string>>? Ports { get => ContainerService?.Ports.ToList(); }
+
         public string Port { get; set; } = string.Empty;
 
         protected override async Task OnInitializedAsync()
@@ -36,12 +54,7 @@ namespace CloudDT.Shared.Pages
                     Text = "Add",
                     IconName = "add",
                     Key = "5",
-                    Command = new RelayCommand(_ =>
-                    {
-                        Port = string.Empty;
-                        if (int.TryParse(Port, out int port))
-                            ContainerService?.ForwardPort(port);
-                    })
+                    Command = new RelayCommand(_ => ShowDialog = true)
                 },
                 new CommandBarItem()
                 {
@@ -59,6 +72,18 @@ namespace CloudDT.Shared.Pages
             await base.OnInitializedAsync();
         }
 
+        public async void Save()
+        {
+            if (int.TryParse(Port, out int port))
+            {
+                if (!await ContainerService!.ForwardPort(port))
+                    return;
+
+                Port = string.Empty;
+                ShowDialog = false;
+            }
+        }
+
         private void DeletePort(object? _)
         {
             Selection.SelectedItems.ToList().ForEach(i =>
@@ -68,6 +93,8 @@ namespace CloudDT.Shared.Pages
 
                 ContainerService?.Ports.Remove(i.Key);
             });
+
+            StateHasChanged();
         }
     }
 }
